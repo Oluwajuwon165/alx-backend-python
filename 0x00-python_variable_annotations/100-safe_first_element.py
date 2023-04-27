@@ -1,16 +1,10 @@
-from typing import Sequence, Optional
+from typing import Any, List, Union
 
 
-def safe_first_element(lst: Sequence[Any]) -> Optional[Any]:
+def safe_first_element(lst: List[Any]) -> Union[Any, None]:
     """
-    Returns the first element of a sequence or None if the sequence is empty.
-
-    Args:
-        lst (Sequence): The sequence to extract the first element from.
-
-    Returns:
-        Any: The first element of the sequence, or None if the
-        sequence is empty.
+    Given a list `lst`, this function returns the first element of the list
+    if it exists, and returns None if the list is empty.
     """
     if lst:
         return lst[0]
