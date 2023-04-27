@@ -6,7 +6,10 @@ def safe_first_element(lst):
     if lst:
         return lst[0]
     else:
-        return None"""
+        return None
+    """
+
+
 from typing import Any, List, Union
 
 
