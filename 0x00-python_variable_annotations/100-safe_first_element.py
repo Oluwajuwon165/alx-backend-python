@@ -8,15 +8,13 @@ def safe_first_element(lst):
     else:
         return None
     """
+import typing
 
 
-from typing import Any, List, Union
-
-
-def safe_first_element(lst: List[Any]) -> Union[Any, None]:
+def safe_first_element(lst: typing.Sequence[typing.Any]) -> typing.Union[typing.Any, None]:
     """
-    Given a list `lst`, this function returns the first element of the list
-    if it exists, and returns None if the list is empty.
+    Return the first element of a sequence if it exists, otherwise
+    return None.
     """
     if lst:
         return lst[0]
