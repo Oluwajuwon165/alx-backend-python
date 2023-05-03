@@ -3,7 +3,6 @@
 Module for async generator.
 """
 
-
 import asyncio
 import random
 from typing import AsyncGenerator
