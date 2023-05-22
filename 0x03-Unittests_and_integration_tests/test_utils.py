@@ -1,37 +1,32 @@
 #!/usr/bin/env python3
 """
-Unit tests for utils.access_nested_map
+Unit tests for utils.get_json
 """
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map
+from unittest.mock import patch, Mock
+from utils import get_json
 
 
-class TestAccessNestedMap(unittest.TestCase):
+class TestGetJson(unittest.TestCase):
     """
-    TestAccessNestedMap class
+    TestGetJson class
     """
 
     @parameterized.expand([
-        ({"a": 1}, ("a",), 1),
-        ({"a": {"b": 2}}, ("a",), {"b": 2}),
-        ({"a": {"b": 2}}, ("a", "b"), 2)
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
+    @patch('utils.requests.get')
+    def test_get_json(self, test_url, test_payload, mock_get):
         """
-        Test the access_nested_map function
+        Test the get_json function
         """
-        self.assertEqual(access_nested_map(nested_map, path), expected)
+        mock_response = Mock()
+        mock_response.json.return_value = test_payload
+        mock_get.return_value = mock_response
 
-    @parameterized.expand([
-    ({}, ("a",), "KeyError('a')"),
-    ({"a": 1}, ("a", "b"), "KeyError('b')")
-    ])
-    def test_access_nested_map_exception(self, nested_map, path, expected_exception_message):
-        """
-        Test that KeyError is raised with the expected exception message
-        """
-        with self.assertRaises(KeyError) as context:
-            access_nested_map(nested_map, path)
+        result = get_json(test_url)
 
-        self.assertEqual(repr(context.exception), expected_exception_message)
+        mock_get.assert_called_once_with(test_url)
+        self.assertEqual(result, test_payload)
